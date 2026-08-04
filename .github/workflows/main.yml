@@ -1,0 +1,24 @@
+name: Server Monitor CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Kodları Çek
+      uses: actions/checkout@v3
+
+    - name: Docker Image Oluştur
+      run: docker build -t server-monitor .
+
+    - name: Konteynırı Çalıştır ve Test Et
+      run: |
+        docker run -d -p 8000:8000 -v ${{ github.workspace }}:/app --name my-monitor server-monitor
+        sleep 3
+        curl http://localhost:8000/status
