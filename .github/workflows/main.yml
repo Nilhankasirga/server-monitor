@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Kodları Çek
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Docker Image Oluştur
       run: docker build -t server-monitor .
